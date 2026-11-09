@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Мої захоплення</title>
+<style>
+:root{--yellow:#f6d51c;--navy:#073d4b;--ink:#414141}
+*{box-sizing:border-box}
+body{margin:0;background:#f2f3f4;color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+.site-header{height:66px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 max(22px,calc((100% - 1100px)/2));box-shadow:0 1px 5px #0002;position:relative;z-index:10}
+.brand{display:flex;align-items:center;gap:12px;font-size:19px;color:#303030}
+.logo{width:42px;height:34px;border-radius:2px;background:#63a83c;display:grid;place-items:center;color:white;font-size:22px}
+.dropdown{position:relative}
+.drop-button{border:0;background:white;color:#333;font-size:16px;padding:14px 12px;min-width:190px;text-align:right;cursor:pointer}
+.chevron{display:inline-block;margin-left:12px;border:solid #555;border-width:0 2px 2px 0;padding:4px;transform:rotate(45deg);vertical-align:4px;transition:.15s}
+.dropdown.open .chevron{transform:rotate(225deg);vertical-align:0}
+.menu{display:none;position:absolute;right:0;top:100%;width:240px;background:#fff;padding:12px 0;box-shadow:0 5px 16px #0003;border:1px solid #ddd}
+.dropdown.open .menu{display:block}
+.menu button{display:block;width:100%;border:0;background:white;text-align:left;padding:13px 48px;font-size:16px;color:#333;cursor:pointer}
+.menu button:hover{background:#f3f3f3}
+.menu button.selected span{background:#222;color:white;padding:3px 6px;font-weight:bold}
+.site{max-width:1120px;margin:0 auto;background:#fff;min-height:calc(100vh - 66px);box-shadow:0 2px 12px #0001}
+.hero{height:245px;position:relative;display:flex;align-items:center;justify-content:center;text-align:center;color:white;background-size:cover;background-position:center;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(#0008,#0007)}
+.hero h1{position:relative;z-index:1;margin:0 20px 26px;font-size:clamp(36px,5vw,58px);font-weight:400;letter-spacing:1px;text-shadow:0 2px 5px #0008}
+.hero-line{position:absolute;z-index:2;bottom:72px;width:min(640px,65%);height:9px;background:var(--yellow)}
+.intro{background:linear-gradient(90deg,#f9df36,#f5d21b);padding:26px 5%;font-size:20px;line-height:1.5;box-shadow:0 3px 7px #0002}
+.content{padding:22px 5% 55px;text-align:center}
+.content-photo{display:block;width:min(660px,100%);height:310px;object-fit:cover;margin:0 auto 25px}
+.content h2{color:var(--navy);font-size:28px;font-weight:500;margin:12px 0}
+.content p{max-width:850px;margin:10px auto;font-size:18px;line-height:1.7;text-align:left}
+footer{text-align:center;padding:22px;color:#777;font-size:13px}
+@media(max-width:600px){.site-header{padding:0 12px}.brand{font-size:16px}.drop-button{min-width:155px;font-size:14px}.menu{width:210px}.menu button{padding-left:30px}.hero{height:205px}.intro{font-size:17px}.content-photo{height:230px}}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="brand"><span class="logo">⚽</span><span>Мої захоплення</span></div>
+  <div class="dropdown" id="pageDropdown">
+    <button class="drop-button" id="dropButton" aria-haspopup="true" aria-expanded="false">
+      <span id="currentPage">Домашня сторінка</span><i class="chevron"></i>
+    </button>
+    <div class="menu" id="pageMenu" role="menu">
+      <button type="button" data-page="informatics"><span>Інформатика</span></button>
+      <button type="button" data-page="football"><span>Футбол</span></button>
+      <button type="button" data-page="chess"><span>Шахи</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="site">
+  <section class="hero" id="hero">
+    <h1 id="heading">ІНФОРМАТИКА</h1><div class="hero-line"></div>
+  </section>
+  <section class="intro" id="intro">
+    Інформатика — це галузь науки, що вивчає структуру і загальні властивості інформації, а також питання, пов’язані з її пошуком, збиранням, перетворенням, зберіганням, поширенням і використанням у різних сферах людської діяльності.
+  </section>
+  <section class="content">
+    <img class="content-photo" id="contentPhoto" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=85" alt="Ноутбук та робоче місце">
+    <h2 id="subheading">Інформаційні технології</h2>
+    <p id="description">Комп’ютери та цифрові технології стали важливою частиною нашого життя. Вони допомагають навчатися, працювати, спілкуватися та знаходити потрібну інформацію.</p>
+  </section>
+</main>
+<footer>Мій сайт про захоплення</footer>
+
+<script>
+const pages={
+  informatics:{
+    label:"Інформатика",title:"ІНФОРМАТИКА",
+    intro:"Інформатика — це галузь науки, що вивчає структуру і загальні властивості інформації, а також питання, пов’язані з її пошуком, збиранням, перетворенням, зберіганням, поширенням і використанням у різних сферах людської діяльності.",
+    sub:"Інформаційні технології",
+    desc:"Комп’ютери та цифрові технології стали важливою частиною нашого життя. Вони допомагають навчатися, працювати, спілкуватися та знаходити потрібну інформацію.",
+    hero:"https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1800&q=85",
+    photo:"https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=85",
+    alt:"Комп’ютерна техніка та робота за ноутбуком"
+  },
+  football:{
+    label:"Футбол",title:"ФУТБОЛ",
+    intro:"Футбол — це командний вид спорту, який грають між двома командами по одинадцять гравців зі сферичним м’ячем.",
+    sub:"Найпопулярніша гра у світі",
+    desc:"Футбол розвиває швидкість, витривалість, уважність і вміння працювати в команді. Мета гри — забити якомога більше голів у ворота суперника. Це гра, яка об’єднує мільйони людей у всьому світі.",
+    hero:"https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1800&q=85",
+    photo:"https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=1200&q=85",
+    alt:"Футбольний м’яч на зеленому полі"
+  },
+  chess:{
+    label:"Шахи",title:"ШАХИ",
+    intro:"Шахи — найпоширеніша інтелектуальна гра у світі та одна з найцікавіших настільних ігор.",
+    sub:"Гра розуму та стратегії",
+    desc:"Шахи тренують логічне мислення, пам’ять і терпіння. Гравці по черзі пересувають фігури на дошці та намагаються поставити мат королю суперника. Кожна партія потребує уважності та продуманої стратегії.",
+    hero:"https://images.unsplash.com/photo-1586165368502-1bad197a6461?auto=format&fit=crop&w=1800&q=85",
+    photo:"https://images.unsplash.com/photo-1586165368502-1bad197a6461?auto=format&fit=crop&w=1200&q=85",
+    alt:"Шахова дошка та шахові фігури"
+  }
+};
+const dropdown=document.getElementById("pageDropdown");
+const dropButton=document.getElementById("dropButton");
+const currentPage=document.getElementById("currentPage");
+dropButton.addEventListener("click",()=>{
+  const opened=dropdown.classList.toggle("open");
+  dropButton.setAttribute("aria-expanded",String(opened));
+});
+document.addEventListener("click",e=>{
+  if(!dropdown.contains(e.target)){
+    dropdown.classList.remove("open");
+    dropButton.setAttribute("aria-expanded","false");
+  }
+});
+document.querySelectorAll(".menu button").forEach(button=>{
+  button.addEventListener("click",()=>{
+    const key=button.dataset.page,p=pages[key];
+    currentPage.textContent=p.label;
+    document.getElementById("heading").textContent=p.title;
+    document.getElementById("intro").textContent=p.intro;
+    document.getElementById("subheading").textContent=p.sub;
+    document.getElementById("description").textContent=p.desc;
+    document.getElementById("hero").style.backgroundImage=`url("${p.hero}")`;
+    const photo=document.getElementById("contentPhoto");
+    photo.src=p.photo;photo.alt=p.alt;
+    document.querySelectorAll(".menu button").forEach(b=>b.classList.toggle("selected",b===button));
+    dropdown.classList.remove("open");
+    dropButton.setAttribute("aria-expanded","false");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+document.getElementById("hero").style.backgroundImage=`url("${pages.informatics.hero}")`;
+document.querySelector('[data-page="informatics"]').classList.add("selected");
+</script>
+</body>
+</html>
